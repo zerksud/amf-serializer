@@ -121,6 +121,8 @@ public class AMF3Serializer extends DataOutputStream implements ObjectOutput, AM
                     writeAMF3ByteArray((byte[])o);
                 else
                     writeAMF3Array(o);
+            } else if (o instanceof Map) {
+                writeAMF3AssociativeArray((Map<?, ?>)o);
             }
             else
                 writeAMF3Object(o);
@@ -275,6 +277,27 @@ public class AMF3Serializer extends DataOutputStream implements ObjectOutput, AM
             write(0x01);
             for (int i = 0; i < length; i++)
                 writeObject(Array.get(array, i));
+        }
+    }
+
+    protected void writeAMF3AssociativeArray(Map<?, ?> map) throws IOException {
+        if (debugMore) debug("writeAMF3ECMAArray(array=", map, ")");
+
+        write(AMF3_ARRAY);
+
+        int index = indexOfStoredObjects(map);
+        if (index >= 0) {
+            writeAMF3IntegerData(index << 1);
+        } else {
+            addToStoredObjects(map);
+
+            write(0x01);
+
+            for (Object key : map.keySet()) {
+                writeAMF3StringData(key.toString());
+                writeObject(map.get(key));
+            }
+            writeAMF3StringData("");
         }
     }
 
