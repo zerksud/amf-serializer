@@ -37,7 +37,7 @@ import java.io.ObjectInput;
 import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
@@ -252,7 +252,7 @@ public class AMF3Deserializer extends DataInputStream implements ObjectInput, AM
                 result = objects;
             }
             else {
-                Map<Object, Object> map = new HashMap<Object, Object>();
+                Map<Object, Object> map = new LinkedHashMap<Object, Object>();
                 addToStoredObjects(map);
 
                 while(key.length() > 0) {
