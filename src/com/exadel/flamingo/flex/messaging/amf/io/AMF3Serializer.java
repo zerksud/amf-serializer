@@ -281,7 +281,7 @@ public class AMF3Serializer extends DataOutputStream implements ObjectOutput, AM
     }
 
     protected void writeAMF3AssociativeArray(Map<?, ?> map) throws IOException {
-        if (debugMore) debug("writeAMF3ECMAArray(array=", map, ")");
+        if (debugMore) debug("writeAMF3AssociativeArray(array=", map, ")");
 
         write(AMF3_ARRAY);
 
